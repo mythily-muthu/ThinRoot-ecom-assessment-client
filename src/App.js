@@ -6,6 +6,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Order from "./pages/Order";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/product/:id" element={<SingleProduct />} />
           <Route path="/order" element={<Order />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
 
         </Routes>
       </Router>

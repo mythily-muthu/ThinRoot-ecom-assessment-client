@@ -1,8 +1,11 @@
 import React from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
 const Register = () => {
   let initialValues = {
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirmpassword: "",
@@ -53,15 +56,15 @@ const Register = () => {
               <Form>
                 <div className="py-4 flex flex-col gap-y-3  ">
                   <label htmlFor="email" className="font-medium text-primary">
-                    User Name
+                    Name
                   </label>
                   <Field
-                    name="username"
+                    name="name"
                     type="text"
-                    placeholder="username"
+                    placeholder="name"
                     className=" border border-black px-2 flex flex-col py-1  "
                   />
-                  <ErrorMessage name="username" />
+                  <ErrorMessage name="name" />
                 </div>
 
                 <div className="py-4 flex flex-col gap-y-3 ">

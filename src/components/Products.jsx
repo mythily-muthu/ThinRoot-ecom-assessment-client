@@ -42,7 +42,7 @@ const Products = () => {
                         fontFamily: "Trirong",
                       }}
                     >
-                      <p className="">{item.name}</p>
+                      <p className="font-bold">{item.name}</p>
                       <p className="">${item.price}</p>
                     </div>
 

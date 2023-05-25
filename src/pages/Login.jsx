@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
 const Login = () => {
+  const [data, setData] = useState("");
+  let initialValues = {
+    email: "",
+    password: "",
+  };
+  let loginSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("*should be valid email")
+      .required("*Please enter email!"),
+
+    password: Yup.string()
+      .min(4, "*Password should contain more than 3 characters.")
+      .max(9, "*Password shouldn't exceed 9 characters.")
+      .required("*Please enter Password!"),
+  });
+
+  const handleSubmit = async (values) => {
+    console.log("formik", values);
+    let apiUrl = "https://mythu-ecommerce-app.onrender.com/auth/login";
+    let res = await axios.post(apiUrl, values);
+    console.log(res.data);
+    setData(res.data);
+  };
+
   return (
     <div
       className="flex w-full min-h-screen bg-cover justify-center items-center "
