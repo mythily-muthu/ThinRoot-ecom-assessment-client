@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [data, setData] = useState("");
+  let navigate = useNavigate();
   let initialValues = {
     email: "",
     password: "",
@@ -26,6 +28,7 @@ const Login = () => {
     let res = await axios.post(apiUrl, values);
     console.log(res.data);
     setData(res.data);
+    navigate("/");
   };
 
   return (

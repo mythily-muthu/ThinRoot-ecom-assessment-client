@@ -41,6 +41,7 @@ const Navbar = () => {
           <RiShoppingBag3Line
             size={30}
             className="text-white hover:text-yellow"
+            onClick={() => navigate("/cart")}
           />
         </div>
       </div>

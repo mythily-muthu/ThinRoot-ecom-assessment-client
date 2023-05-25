@@ -61,18 +61,33 @@ const SingleProduct = () => {
               <p className="font-semibold text-4xl tracking-[0.1em] items-baseline border-b-2 border-yellow ">
                 {productDetails.name}
               </p>
-              <p className="font-medium text-2xl tracking-[0.2em] py-4">
+              <div className="flex text-lg tracking-[0.1em] ">
+                <p className="pt-5 tracking-[0.1em]">
+                  {productDetails.description}
+                </p>
+              </div>
+              <p className="font-bold text-2xl tracking-[0.2em] py-4">
                 ${productDetails.price}
               </p>
               <p className="font-bold text-base tracking-[0.2em] ">
                 SELECT SIZE
               </p>
-              <div className="flex gap-x-5 tracking-[0.2em] pb-7 cursor-pointer">
-                <p className="font-medium text-lg tracking-[0.2em] ">S</p>
-                <p className="font-medium text-lg tracking-[0.2em]">M</p>
-                <p className="font-medium text-lg tracking-[0.2em]">L</p>
-                <p className="font-medium text-lg tracking-[0.2em]">XL</p>
-                <p className="font-medium text-lg tracking-[0.2em]">XXL</p>
+              <div className="flex gap-x-5 tracking-[0.2em] pb-7 cursor-pointer ">
+                <p className="font-medium text-lg tracking-[0.2em] border border-yellow rounded-md px-4 py-2">
+                  S
+                </p>
+                <p className="font-medium text-lg tracking-[0.2em] border border-yellow rounded-md px-4 py-2">
+                  M
+                </p>
+                <p className="font-medium text-lg tracking-[0.2em] border border-yellow rounded-md px-4 py-2">
+                  L
+                </p>
+                <p className="font-medium text-lg tracking-[0.2em] border border-yellow rounded-md px-4 py-2">
+                  XL
+                </p>
+                <p className="font-medium text-lg tracking-[0.2em] border border-yellow rounded-md px-4 py-2">
+                  XXL
+                </p>
               </div>
               <div className="flex gap-x-5 tracking-[0.2em]">
                 <p className="font-bold ">QUANTITY</p>

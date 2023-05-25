@@ -37,16 +37,19 @@ const Products = () => {
                       className="w-80 h-[500px] object-contain rounded-xl mx-auto border border-yellow"
                     />
                     <div
-                      className="flex flex-col py-5 gap-y-2 text-lg uppercase tracking-[0.1em] "
+                      className="flex flex-col py-5 gap-y-1 text-lg uppercase tracking-[0.1em] "
                       style={{
                         fontFamily: "Trirong",
                       }}
                     >
-                      <p className="font-bold">{item.name}</p>
-                      <p className="">${item.price}</p>
+                      <p className="font-extrabold">{item.name}</p>
+                      <p className="font-medium tracking-[0.4em]">
+                        ${item.price}
+                      </p>
+                      <p className="font-bold text-base tracking-[0.2em] text-primary cursor-pointer">
+                        BUY NOW
+                      </p>
                     </div>
-
-                    <Button name={"BUY NOW"} />
                   </div>
                 </div>
               );
