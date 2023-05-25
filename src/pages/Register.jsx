@@ -11,7 +11,7 @@ const Register = () => {
     confirmpassword: "",
   };
   let registerSchema = Yup.object().shape({
-    username: Yup.string()
+    name: Yup.string()
       .required("Please Enter UserName")
       .min(6, "Username length should be more than 5"),
     email: Yup.string()
@@ -29,8 +29,9 @@ const Register = () => {
     let registerValues = { ...values };
     delete registerValues.confirmpassword;
     console.log("registerValues", registerValues);
-    let apiUrl = "https://mythu-ecommerce-app.onrender.com/auth/register";
-    let res = await axios.post(apiUrl, registerValues);
+    let baseUrl = "http://localhost:8000/api/";
+    let res = await axios.post(`${baseUrl}auth/register`, registerValues);
+    console.log(res.data);
   };
 
   return (
@@ -54,8 +55,9 @@ const Register = () => {
           {({ values, errors, touched }) => {
             return (
               <Form>
+                {/* name */}
                 <div className="py-4 flex flex-col gap-y-3  ">
-                  <label htmlFor="email" className="font-medium text-primary">
+                  <label htmlFor="name" className="font-medium text-primary">
                     Name
                   </label>
                   <Field
@@ -63,10 +65,11 @@ const Register = () => {
                     type="text"
                     placeholder="name"
                     className=" border border-black px-2 flex flex-col py-1  "
+                    values={values.email}
                   />
                   <ErrorMessage name="name" />
                 </div>
-
+                {/* email */}
                 <div className="py-4 flex flex-col gap-y-3 ">
                   <label
                     htmlFor="Password"
@@ -79,9 +82,11 @@ const Register = () => {
                     type="email"
                     placeholder="email"
                     className="border border-black px-2 flex flex-col py-1"
+                    values={values.email}
                   />
                   {errors.email && touched.email && <div>{errors.email}</div>}
                 </div>
+                {/* password */}
                 <div className="py-4 flex flex-col gap-y-3 ">
                   <label
                     htmlFor="Password"
@@ -94,9 +99,11 @@ const Register = () => {
                     type="password"
                     placeholder="Password"
                     className="border border-black px-2 flex flex-col py-1"
+                    values={values.password}
                   />
                   <ErrorMessage name="password" />
                 </div>
+                {/* confirm password */}
                 <div className="py-4 flex flex-col gap-y-3 ">
                   <label
                     htmlFor="Password"
