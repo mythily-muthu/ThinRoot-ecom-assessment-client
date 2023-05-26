@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { publicRequest } from "../axiosMethod";
+import { useDispatch } from "react-redux";
+import { loginFailure, loginSuccess } from "../redux/userSlice";
 
 const Login = () => {
-  const [data, setData] = useState("");
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   let initialValues = {
     email: "",
@@ -17,18 +19,24 @@ const Login = () => {
       .required("*Please enter email!"),
 
     password: Yup.string()
-      .min(4, "*Password should contain more than 3 characters.")
-      .max(9, "*Password shouldn't exceed 9 characters.")
+      .min(5, "*Password should contain more than 4 characters.")
+      .max(40, "*Password shouldn't exceed 40 characters.")
       .required("*Please enter Password!"),
   });
 
   const handleSubmit = async (values) => {
-    console.log("formik", values);
-    let apiUrl = "https://mythu-ecommerce-app.onrender.com/auth/login";
-    let res = await axios.post(apiUrl, values);
-    console.log(res.data);
-    setData(res.data);
-    navigate("/");
+    try {
+      let res = await publicRequest.post("/auth/login", values);
+      // setUserDetails(res.data.userDetails);
+      if (res.status === 200) {
+        dispatch(loginSuccess(res.data.userDetails));
+        navigate("/");
+      }
+    } catch (error) {
+      dispatch(loginFailure(error.message));
+
+      console.log("Error in login", error.message);
+    }
   };
 
   return (
@@ -39,11 +47,11 @@ const Login = () => {
       }}
     >
       <div
-        className="flex flex-col h-96 w-96 justify-center items-center bg-white p-8 border border-primary
+        className="flex flex-col h-[470px] w-[400px] justify-center items-center bg-white  border border-primary
         bg-opacity-25"
       >
-        <p className="font-bold text-primary">MAKE YOU UP</p>
-        <p className="font-medium py-3">Sign In</p>
+        <p className="font-bold text-primary tracking-[0.2em]">MAKE YOU UP</p>
+        <p className="font-light py-3 tracking-[0.2em]">Sign In</p>
 
         <Formik
           initialValues={initialValues}
@@ -54,7 +62,10 @@ const Login = () => {
             return (
               <Form>
                 <div className="py-4 flex flex-col gap-y-3  ">
-                  <label htmlFor="email" className="font-medium text-primary">
+                  <label
+                    htmlFor="email"
+                    className="font-light text-primary tracking-[0.2em]"
+                  >
                     Email
                   </label>
                   <Field
@@ -62,13 +73,15 @@ const Login = () => {
                     type="email"
                     placeholder="email"
                     className=" border border-black px-2 flex flex-col py-1  "
+                    values={values.email}
                   />
+                  <ErrorMessage name="email" />
                 </div>
 
                 <div className="py-4 flex flex-col gap-y-3 ">
                   <label
                     htmlFor="Password"
-                    className="font-medium text-primary"
+                    className="font-light text-primary tracking-[0.2em]"
                   >
                     Password
                   </label>
@@ -77,18 +90,25 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                     className="border border-black px-2 flex flex-col py-1"
+                    values={values.password}
                   />
+                  <ErrorMessage name="password" />
                 </div>
                 <div>
-                  <p className="flex text-primary justify-end py-2">
-                    forget password?
-                  </p>
-                  <button
-                    className="flex justify-center items-center bg-primary text-white px-4 py-1  rounded-md"
-                    type="submit"
+                  <p
+                    className="flex text-primary text-sm justify-start py-2 tracking-[0.2em] cursor-pointer"
+                    onClick={() => navigate("/register")}
                   >
-                    Log In
-                  </button>
+                    Dont have an account?
+                  </p>
+                  <div className="flex justify-center py-5">
+                    <button
+                      className="flex justify-center items-center bg-primary text-white px-4 py-1 tracking-[0.2em] rounded-md"
+                      type="submit"
+                    >
+                      Log In
+                    </button>
+                  </div>
                 </div>
               </Form>
             );

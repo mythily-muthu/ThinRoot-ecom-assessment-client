@@ -13,7 +13,7 @@ const Button = ({
 }) => {
   return (
     <button
-      className={`h-12 px-3 py-2 ${bgColor} ${text} ${font} ${width} ${textColor} ${radius} ${border}`}
+      className={`h-12 active:scale-95 transition-all duration-100 ease-out active:brightness-90 px-4 py-2 ${bgColor} ${text} ${font} ${width} ${textColor} ${radius} ${border}`}
       onClick={click}
     >
       {name}

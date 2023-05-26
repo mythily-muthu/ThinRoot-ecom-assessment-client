@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { publicRequest } from "../axiosMethod";
 
 const Cart = () => {
   let navigate = useNavigate();
+  const [userCartProducts, setUserCartProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const cartItems = [
     {
       img_url:
@@ -32,10 +35,53 @@ const Cart = () => {
       quantity: "5 lb",
     },
   ];
+
+  //get user's cart using userId
+  // const getUsersCart = async () => {
+  //   try {
+  //     let res = await publicRequest.get(`/carts/${userDetails._id}`);
+  //     console.log(res);
+
+  //     const cartProductsData = res.data.carts.products;
+
+  //     // // Filter the products based on the presence of their IDs in the cartProductIds array
+  //     // let cartProducts = products.filter((product) => {
+  //     //   const cartProductData = cartProductsData.find(
+  //     //     (cartProduct) => cartProduct.productId === product._id
+  //     //   );
+  //     //   if (cartProductData) {
+  //     //     return true;
+  //     //   }
+  //     //   return false;
+  //     // });
+
+  //     // // Add the quantity property to each product in cartProducts
+  //     // cartProducts = cartProducts.map((product) => {
+  //     //   const cartProductData = cartProductsData.find(
+  //     //     (cartProduct) => cartProduct.productId === product._id
+  //     //   );
+  //     //   return {
+  //     //     ...product,
+  //     //     quantity: cartProductData.quantity,
+  //     //   };
+  //     // });
+  //     // setUserCartProducts(cartProducts);
+  //     // console.log("Cart Products:", cartProducts);
+  //   } catch (error) {
+  //     console.log("error:", error.message);
+  //     setLoading(false);
+  //   }
+  // };
+
+  useEffect(() => {
+    // getUsersCart();
+  }, []);
+
   return (
     <div className="flex flex-col w-full h-full bg-grey">
       <Topbar />
       <Navbar />
+
       <div className="flex h-full items-center w-[75%] mx-auto">
         <div className="flex w-full gap-x-8 mt-8">
           {/* left */}

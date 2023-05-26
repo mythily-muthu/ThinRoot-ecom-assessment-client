@@ -29,15 +29,13 @@ const Register = () => {
   });
 
   const handleSubmit = async (values, { resetForm }) => {
-    // console.log("values", values);
     let registerValues = { ...values };
     delete registerValues.confirmpassword;
-    console.log("registerValues", registerValues);
     let baseUrl = "http://localhost:8000/api/";
     let res = await axios.post(`${baseUrl}auth/register`, registerValues);
-    console.log(res.data);
     resetForm();
     alert("User created successfully");
+    navigate("/login");
   };
 
   return (
@@ -62,9 +60,9 @@ const Register = () => {
         >
           {({ values, errors, touched }) => {
             return (
-              <Form>
+              <Form className="flex flex-col gap-y-1 w-full">
                 {/* name */}
-                <div className="py-4 flex flex-col gap-y-3  ">
+                <div className="py-4 flex flex-col gap-y-2  ">
                   <label
                     htmlFor="name"
                     className="font-light tracking-[0.2em] text-primary"
@@ -81,7 +79,7 @@ const Register = () => {
                   <ErrorMessage name="name" />
                 </div>
                 {/* email */}
-                <div className="py-4 flex flex-col gap-y-3 ">
+                <div className="py-4 flex flex-col gap-y-2 ">
                   <label
                     htmlFor="Password"
                     className="font-light tracking-[0.2em] text-primary"
@@ -98,7 +96,7 @@ const Register = () => {
                   {errors.email && touched.email && <div>{errors.email}</div>}
                 </div>
                 {/* password */}
-                <div className="py-4 flex flex-col gap-y-3 ">
+                <div className="py-4 flex flex-col gap-y-2 ">
                   <label
                     htmlFor="Password"
                     className="font-light tracking-[0.2em] text-primary"
@@ -115,7 +113,7 @@ const Register = () => {
                   <ErrorMessage name="password" />
                 </div>
                 {/* confirm password */}
-                <div className="py-4 flex flex-col gap-y-3 ">
+                <div className="py-4 flex flex-col gap-y-2 ">
                   <label
                     htmlFor="Password"
                     className="font-light tracking-[0.2em] text-primary"

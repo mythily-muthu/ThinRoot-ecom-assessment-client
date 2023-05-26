@@ -6,7 +6,7 @@ import { publicRequest } from "../axiosMethod";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
-  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   let navigate = useNavigate();
   const handleClick = (productId) => {
     navigate(`/product/${productId}`);

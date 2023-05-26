@@ -2,8 +2,9 @@ import React, { useState } from "react";
 // import { CiSearch } from "react-icons/ci";
 import { BsPerson } from "react-icons/bs";
 import { RiHeart2Line } from "react-icons/ri";
-import { RiShoppingBag3Line } from "react-icons/ri";
+import { BsCart4 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { FiLogOut } from "react-icons/fi";
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -17,10 +18,10 @@ const Navbar = () => {
           className="flex items-center cursor-pointer "
           onClick={() => navigate("/")}
         />
-        <div className="flex gap-4 text-white text-xl cursor-pointer">
+        {/* <div className="flex gap-4 text-white text-xl cursor-pointer">
           <p onClick={() => navigate("/login")}>Login</p>
           <p onClick={() => navigate("/register")}>Register</p>
-        </div>
+        </div> */}
         {/* <div className="flex relative">
           <input
             type="text"
@@ -36,12 +37,20 @@ const Navbar = () => {
         </div> */}
 
         <div className="flex items-center gap-10">
-          <BsPerson size={30} className="text-white hover:text-yellow" />
-          <RiHeart2Line size={30} className="text-white hover:text-yellow" />
-          <RiShoppingBag3Line
+          <BsPerson
             size={30}
-            className="text-white hover:text-yellow"
+            className="text-white hover:text-yellow cursor-pointer"
+          />
+
+          <BsCart4
+            size={30}
+            className="text-white hover:text-yellow cursor-pointer"
             onClick={() => navigate("/cart")}
+          />
+          <FiLogOut
+            size={30}
+            className="text-white hover:text-yellow cursor-pointer"
+            onClick={() => navigate("/login")}
           />
         </div>
       </div>
