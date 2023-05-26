@@ -29,7 +29,9 @@ const Products = ({ products, loading }) => {
           ) : (
             <div className=" flex flex-wrap justify-center w-full gap-5 h-full ">
               {products.map((item) => {
-                return <ProductCard item={item} click={handleClick} />;
+                return (
+                  <ProductCard key={item._id} item={item} click={handleClick} />
+                );
               })}
             </div>
           )}
