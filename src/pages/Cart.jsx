@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 
 const Cart = () => {
   let navigate = useNavigate();
-  const userState = useSelector((state) => state.user.user);
   const cartState = useSelector((state) => state.cart);
 
   const [loading, setLoading] = useState(true);

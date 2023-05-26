@@ -47,7 +47,7 @@ const Login = () => {
       }}
     >
       <div
-        className="flex flex-col h-[470px] w-[400px] justify-center items-center bg-white  border border-primary
+        className="flex flex-col p-6  w-[400px] justify-center items-center bg-white  border border-primary
         bg-opacity-25"
       >
         <p className="font-bold text-primary tracking-[0.2em]">MAKE YOU UP</p>
@@ -108,6 +108,15 @@ const Login = () => {
                     >
                       LOGIN
                     </button>
+                  </div>
+                </div>
+                <div className="flex flex-col w-full gap-y-2">
+                  <p className="text-primary underline text-center">
+                    Test Credentials
+                  </p>
+                  <div className="flex flex-col w-full gap-y-2 items-center">
+                    <p>email : test@gmail.com</p>
+                    <p>password : test123</p>
                   </div>
                 </div>
               </Form>
