@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
-import { publicRequest } from "../axiosMethod";
-import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/productsSlice";
 import ProductCard from "./ProductCard";
 
 const Products = ({ products, loading }) => {

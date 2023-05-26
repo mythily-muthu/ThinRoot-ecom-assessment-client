@@ -3,16 +3,19 @@ import { useEffect, useState } from "react";
 import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import Button from "../components/Button";
 import { BsPlus } from "react-icons/bs";
 import { BiMinus } from "react-icons/bi";
 
 import { publicRequest } from "../axiosMethod";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
 
 const SingleProduct = () => {
+  let dispatch = useDispatch();
+  let userState = useSelector((state) => state.user.user);
+  console.log(userState);
   const [quantity, setQuantity] = useState(1);
   const [productDetails, setProductDetails] = useState({});
   const [loading, setLoading] = useState(true);
@@ -21,7 +24,6 @@ const SingleProduct = () => {
   let navigate = useNavigate();
 
   let availableSizes = ["XS", "S", "M", "L", "XL"];
-  // let baseUrl = "https://mythu-ecommerce-app.onrender.com/product/find";
 
   const getProductDetails = async () => {
     try {
@@ -48,23 +50,21 @@ const SingleProduct = () => {
   };
 
   const handleAddToCart = async (product) => {
-    //   try {
-    //     await publicRequest.post("/cart/add", {
-    //       userId: userDetails._id,
-    //       productId: product._id,
-    //       quantity: quantity,
-    //     });
-    //     // setCarts({
-    //     //   userId: userDetails._id,
-    //     //   products: [{ productId: product._id, quantity }],
-    //     // });
-    //   } catch (error) {
-    //     console.log("error:", error.message);
-    //   }
+    try {
+      await publicRequest.post("/carts/add", {
+        userId: userState._id,
+        productId: product._id,
+        quantity: quantity,
+      });
+      dispatch(addToCart({ item: product, quantity }));
+    } catch (error) {
+      console.log("error:", error.message);
+    }
   };
 
   useEffect(() => {
     getProductDetails();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -101,22 +101,26 @@ const SingleProduct = () => {
               ${productDetails.price}
             </p>
             <p className="font-bold text-base tracking-[0.2em] ">SELECT SIZE</p>
-            <div className="flex gap-x-5 tracking-[0.2em]  cursor-pointer ">
-              {availableSizes.map((size, i) => {
-                return (
-                  <p
-                    key={i}
-                    onClick={() => handleChooseSize(size)}
-                    className={`font-medium text-lg tracking-[0.2em] border border-yellow ${
-                      activeSize === size &&
-                      "bg-primary text-white border-transparent"
-                    } rounded-md px-4 py-2`}
-                  >
-                    {size}
-                  </p>
-                );
-              })}
-            </div>
+            {["men's clothing", "women's clothing"].includes(
+              productDetails.category
+            ) && (
+              <div className="flex gap-x-5 tracking-[0.2em]  cursor-pointer ">
+                {availableSizes.map((size, i) => {
+                  return (
+                    <p
+                      key={i}
+                      onClick={() => handleChooseSize(size)}
+                      className={`font-medium text-lg tracking-[0.2em] border border-yellow ${
+                        activeSize === size &&
+                        "bg-primary text-white border-transparent"
+                      } rounded-md px-4 py-2`}
+                    >
+                      {size}
+                    </p>
+                  );
+                })}
+              </div>
+            )}
             <div className="flex flex-col gap-y-3 tracking-[0.2em] w-full">
               <p className="font-bold ">QUANTITY</p>
               <div className="flex gap-x-3 items-center w-full">
@@ -146,14 +150,15 @@ const SingleProduct = () => {
                 bgColor="bg-white"
                 border=" border border-black"
                 width="w-max"
-                click={() => handleAddToCart()}
+                click={() => handleAddToCart(productDetails)}
               />
               <Button
-                name={"ADD TO WISHLIST"}
+                name={"GO TO CART"}
                 bgColor="bg-primary"
                 textColor="text-white"
                 radius="rounded-3xl"
                 width="w-max"
+                click={() => navigate("/cart")}
               />
             </div>
           </div>

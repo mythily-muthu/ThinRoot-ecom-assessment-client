@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let baseApiUrl = "http://localhost:8000/api";
+let baseApiUrl = "https://thinroot-ecom-api.onrender.com/api";
 
 export const publicRequest = axios.create({
     baseURL: baseApiUrl

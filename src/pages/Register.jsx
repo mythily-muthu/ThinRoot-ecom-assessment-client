@@ -1,8 +1,8 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { publicRequest } from "../axiosMethod";
 
 const Register = () => {
   let navigate = useNavigate();
@@ -31,8 +31,8 @@ const Register = () => {
   const handleSubmit = async (values, { resetForm }) => {
     let registerValues = { ...values };
     delete registerValues.confirmpassword;
-    let baseUrl = "http://localhost:8000/api/";
-    let res = await axios.post(`${baseUrl}auth/register`, registerValues);
+
+    await publicRequest.post(`/auth/register`, registerValues);
     resetForm();
     alert("User created successfully");
     navigate("/login");

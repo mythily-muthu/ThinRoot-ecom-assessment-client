@@ -19,6 +19,7 @@ const Home = () => {
     if (!userState) {
       navigate("/login");
     }
+    // eslint-disable-next-line
   }, [userState]);
 
   //get all products from api
@@ -38,9 +39,9 @@ const Home = () => {
 
   useEffect(() => {
     getAllProducts();
+    // eslint-disable-next-line
   }, []);
 
-  console.log("userState", userState);
   return (
     <div className="flex flex-col w-full">
       <Topbar />
