@@ -15,7 +15,6 @@ import { addToCart } from "../redux/cartSlice";
 const SingleProduct = () => {
   let dispatch = useDispatch();
   let userState = useSelector((state) => state.user.user);
-  console.log(userState);
   const [quantity, setQuantity] = useState(1);
   const [productDetails, setProductDetails] = useState({});
   const [loading, setLoading] = useState(true);

@@ -10,7 +10,6 @@ const JewelsProducts = () => {
   const getElectronicsProducts = (category) => {
     return products.filter((product) => product.category === category);
   };
-  console.log("elecat", getElectronicsProducts("electronics"));
   useEffect(() => {
     setTimeout(() => setLoading(false), 1300);
   }, []);

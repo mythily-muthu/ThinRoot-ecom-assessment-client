@@ -1,8 +1,6 @@
-# MERN Stack
+# Full-Stack Ecommerce Application (MERN)
 
-For preview [Click Here]().
-
-# Full-Stack eCommerce App (MERN)
+For preview [Click Here](https://thinroot-ecom.netlify.app/).
 
 This app is a full-featured authenticated full-stack web application that allows users to browse and purchase products. It provides a user-friendly interface for shopping and managing user accounts. The app is built with modern web technologies, including the MERN stack (MongoDB, Express, React, Node.js).
 

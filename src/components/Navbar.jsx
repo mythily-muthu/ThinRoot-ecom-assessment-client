@@ -16,7 +16,6 @@ const Navbar = () => {
   const cartState = useSelector((state) => state.cart);
   const userState = useSelector((state) => state.user.user);
 
-  console.log({ cartState });
   let navList = [
     {
       title: "Women",
@@ -77,8 +76,9 @@ const Navbar = () => {
           {navList.map((item) => {
             return (
               <p
-                className={`uppercase hover:text-yellow cursor-pointer ${
-                  activeNav === item.link && "underline"
+                className={`uppercase hover:text-yellow cursor-pointer transition-all duration-100   ${
+                  activeNav === item.link &&
+                  "scale-125  border-b-2 border-b-yellow "
                 } border-bottom text-sm xl:text-xl`}
                 onClick={() => handleNavItem(item)}
               >

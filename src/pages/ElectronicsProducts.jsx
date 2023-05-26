@@ -7,11 +7,9 @@ import { useSelector } from "react-redux";
 const ElectronicsProducts = () => {
   const [loading, setLoading] = useState(true);
   const products = useSelector((state) => state.products.products);
-  console.log(products);
   const getElectronicsProducts = (category) => {
     return products.filter((product) => product.category === category);
   };
-  console.log("elecat", getElectronicsProducts("electronics"));
   useEffect(() => {
     setTimeout(() => setLoading(false), 1300);
   }, []);

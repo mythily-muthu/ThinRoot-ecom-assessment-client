@@ -106,7 +106,7 @@ const Login = () => {
                       className="flex justify-center items-center bg-primary text-white px-4 py-1 tracking-[0.2em] rounded-md"
                       type="submit"
                     >
-                      Log In
+                      LOGIN
                     </button>
                   </div>
                 </div>

@@ -12,7 +12,6 @@ const Cart = () => {
   const userState = useSelector((state) => state.user.user);
   const cartState = useSelector((state) => state.cart);
 
-  console.log("user State", userState);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
