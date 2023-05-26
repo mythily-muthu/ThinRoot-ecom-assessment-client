@@ -76,6 +76,7 @@ const Navbar = () => {
           {navList.map((item) => {
             return (
               <p
+                key={item.link}
                 className={`uppercase hover:text-yellow cursor-pointer transition-all duration-100   ${
                   activeNav === item.link &&
                   "scale-125  border-b-2 border-b-yellow "
