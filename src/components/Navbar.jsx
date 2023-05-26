@@ -8,14 +8,33 @@ import { FiLogOut } from "react-icons/fi";
 
 const Navbar = () => {
   let navigate = useNavigate();
+  const [activeNav, setActiveNav] = useState("");
 
+  let navList = [
+    {
+      title: "Women",
+      link: "women",
+    },
+    {
+      title: "Jewels",
+      link: "jewels",
+    },
+    {
+      title: "Electronics",
+      link: "electronics",
+    },
+  ];
+  const handleNavItem = (item) => {
+    navigate(`/${item.link}`);
+    setActiveNav(item.link);
+  };
   return (
-    <div className="flex w-full h-24 bg-primary">
-      <div className="flex w-[80%]  mx-auto items-center justify-between ">
+    <div className="flex w-full h-20 bg-primary">
+      <div className="flex w-full xl:w-[80%] px-5  mx-auto items-center justify-between ">
         <img
           src="https://imagescdn.pantaloons.com/img/app/brands/pantaloons/icons/logo_pantaloons.svg"
           alt="logo"
-          className="flex items-center cursor-pointer "
+          className="flex w-40 xl:w-60 items-center cursor-pointer "
           onClick={() => navigate("/")}
         />
         {/* <div className="flex gap-4 text-white text-xl cursor-pointer">
@@ -35,7 +54,20 @@ const Navbar = () => {
           </div>
           
         </div> */}
-
+        <div className="flex text-white items-center gap-x-2 xl:gap-x-4 ">
+          {navList.map((item) => {
+            return (
+              <p
+                className={`uppercase hover:text-yellow cursor-pointer ${
+                  activeNav === item.link && "underline"
+                } border-bottom text-sm xl:text-xl`}
+                onClick={() => handleNavItem(item)}
+              >
+                {item.title}
+              </p>
+            );
+          })}
+        </div>
         <div className="flex items-center gap-10">
           <BsPerson
             size={30}

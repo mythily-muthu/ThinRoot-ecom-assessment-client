@@ -10,7 +10,6 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         loginSuccess: (state, action) => {
-            console.log("succes:", action.payload)
             state.user = action.payload; // res user obj 
             state.error = null;
         },
