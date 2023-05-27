@@ -105,8 +105,11 @@ const Cart = () => {
                 })}
               </div>
             ) : (
-              <div className="flex flex-col  w-[75%] mx-auto gap-y-3 ">
-                <p> No cart item here, Shop more...!</p>
+              <div className="flex flex-col justify-center items-center w-[75%] mx-auto gap-y-3 ">
+                <p className="text-xl xl:text-3xl tracking-wide text-primary  ">
+                  {" "}
+                  No Cart items here, Shop more...!
+                </p>
                 <Button
                   name={"Shop more"}
                   width="w-max"
@@ -118,61 +121,65 @@ const Cart = () => {
               </div>
             )}
             {/* right */}
-            <div
-              className="bg-white w-1/3 flex flex-col gap-y-8 p-6 h-max rounded-3xl border border-primary"
-              style={{
-                fontFamily: "Inter",
-              }}
-            >
-              <p className="font-semibold text-xl">Order summary</p>
-              <div className="flex justify-between">
-                <div
-                  className="font-normal text-base flex flex-col gap-y-2 "
-                  style={{
-                    fontFamily: "Inter",
-                  }}
-                >
-                  <p className="">Subtotal</p>
-                  <p className="">Shipping</p>
-                  <p className="">Discount</p>
-                  <p className="font-semibold ">Total</p>
+            {cartState.cartItems.length > 0 && (
+              <div
+                className="bg-white w-1/3 flex flex-col gap-y-8 p-6 h-max rounded-3xl border border-primary"
+                style={{
+                  fontFamily: "Inter",
+                }}
+              >
+                <p className="font-semibold text-xl">Order summary</p>
+                <div className="flex justify-between">
+                  <div
+                    className="font-normal text-base flex flex-col gap-y-2 "
+                    style={{
+                      fontFamily: "Inter",
+                    }}
+                  >
+                    <p className="">Subtotal</p>
+                    <p className="">Shipping</p>
+                    <p className="">Discount</p>
+                    <p className="font-semibold ">Total</p>
+                  </div>
+                  <div
+                    className="text-base flex flex-col gap-y-2"
+                    style={{
+                      fontFamily: "Inter ",
+                    }}
+                  >
+                    <p className="">${cartState.totalPrice.toFixed(2)}</p>
+                    <p className="">$5.00</p>
+                    <p className="">$5.00</p>
+                    <p className="font-semibold ">
+                      ${cartState.totalPrice.toFixed(2)}
+                    </p>
+                  </div>
                 </div>
-                <div
-                  className="text-base flex flex-col gap-y-2"
-                  style={{
-                    fontFamily: "Inter ",
-                  }}
-                >
-                  <p className="">${cartState.totalPrice.toFixed(2)}</p>
-                  <p className="">$5.00</p>
-                  <p className="">$5.00</p>
-                  <p className="font-semibold ">
-                    ${cartState.totalPrice.toFixed(2)}
-                  </p>
+                <div className="flex justify-center ">
+                  <Button
+                    name={"Check Out"}
+                    width="w-80"
+                    font="font-bold"
+                    text="text-lg"
+                    click={() =>
+                      handleCheckout(
+                        cartState.cartItems.map((item) => item._id)
+                      )
+                    }
+                  />
+                </div>
+                <div className="flex justify-center ">
+                  <Button
+                    name={"Continue shopping"}
+                    width="w-80"
+                    font="font-bold"
+                    text="text-lg"
+                    bgColor="bg-primary"
+                    click={() => navigate("/")}
+                  />
                 </div>
               </div>
-              <div className="flex justify-center ">
-                <Button
-                  name={"Check Out"}
-                  width="w-80"
-                  font="font-bold"
-                  text="text-lg"
-                  click={() =>
-                    handleCheckout(cartState.cartItems.map((item) => item._id))
-                  }
-                />
-              </div>
-              <div className="flex justify-center ">
-                <Button
-                  name={"Continue shopping"}
-                  width="w-80"
-                  font="font-bold"
-                  text="text-lg"
-                  bgColor="bg-primary"
-                  click={() => navigate("/")}
-                />
-              </div>
-            </div>
+            )}
           </div>
         )}
       </div>
