@@ -26,11 +26,13 @@ const Topbar = () => {
             CLICK HERE TO SELECT PINCODE
           </p> */}
         </div>
-        <div className="flex whitespace-nowrap gap-6 font-normal tracking-[0.2em] text-sm text-light">
-          <p className="hidden md:block ">GREEN CARD</p>
-          <p>GIFT CARD</p>
-          <p>STORE LOCATOR</p>
-          <p>TRACT ORDER</p>
+        <div className="hidden md:block ">
+          <div className="whitespace-nowrap flex gap-6 font-normal tracking-[0.2em] text-sm text-light">
+            <p className=" ">GREEN CARD</p>
+            <p>GIFT CARD</p>
+            <p>STORE LOCATOR</p>
+            <p>TRACT ORDER</p>
+          </div>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { publicRequest } from "../axiosMethod";
 import { getUserCart } from "../redux/cartSlice";
+import { logout } from "../redux/userSlice";
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -38,23 +39,30 @@ const Navbar = () => {
   const getUsersCart = async () => {
     try {
       let res = await publicRequest.get(`/carts/${userState._id}`);
-
-      const cartProducts = res.data.carts.products.map((cartItem) => {
-        const product = allProducts.find(
-          (product) => product._id === cartItem.productId
-        );
-        return {
-          ...product,
-          quantity: cartItem.quantity,
-          // cartItemId: cartItem._id,
-        };
-      });
-      setLoading(false);
-      dispatch(getUserCart(cartProducts));
+      if (res.data.carts) {
+        const cartProducts = res.data.carts.products.map((cartItem) => {
+          const product = allProducts.find(
+            (product) => product._id === cartItem.productId
+          );
+          return {
+            ...product,
+            quantity: cartItem.quantity,
+            // cartItemId: cartItem._id,
+          };
+        });
+        setLoading(false);
+        dispatch(getUserCart(cartProducts));
+      }
     } catch (error) {
       console.log("error:", error.message);
       setLoading(false);
     }
+  };
+
+  // while logout clear user data ;
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -63,8 +71,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="flex w-full h-20 bg-primary sticky top-0">
-      <div className="flex w-full xl:w-[80%] px-5  mx-auto items-center justify-between ">
+    <div className="flex w-full min-h-20 p-3 bg-primary sticky top-0">
+      <div className="flex w-full flex-col justify-center md:justify-between  md:flex-row items-center gap-3 md: xl:w-[80%] px-5  mx-auto ">
         <img
           src="https://imagescdn.pantaloons.com/img/app/brands/pantaloons/icons/logo_pantaloons.svg"
           alt="logo"
@@ -90,12 +98,14 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-10">
           <BsPerson
+            title="user"
             size={30}
             className="text-white hover:text-yellow cursor-pointer"
           />
 
           <div className="relative">
             <BsCart4
+              title="cart"
               size={30}
               className="text-white hover:text-yellow cursor-pointer"
               onClick={() => navigate("/cart")}
@@ -110,9 +120,10 @@ const Navbar = () => {
           </div>
 
           <FiLogOut
+            title="logout"
             size={30}
             className="text-white hover:text-yellow cursor-pointer"
-            onClick={() => navigate("/login")}
+            onClick={handleLogout}
           />
         </div>
       </div>
