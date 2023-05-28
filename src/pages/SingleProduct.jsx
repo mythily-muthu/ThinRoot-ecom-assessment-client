@@ -11,6 +11,7 @@ import { publicRequest } from "../axiosMethod";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
+import Swal from "sweetalert2";
 
 const SingleProduct = () => {
   let dispatch = useDispatch();
@@ -55,6 +56,12 @@ const SingleProduct = () => {
         productId: product._id,
         quantity: quantity,
       });
+      Swal.fire({
+        icon: "success",
+        title: "Product added..!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       dispatch(addToCart({ item: product, quantity }));
     } catch (error) {
       console.log("error:", error.message);
@@ -73,8 +80,8 @@ const SingleProduct = () => {
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div className=" w-[73%] grid grid-cols-12 gap-8  h-full justify-center p-10">
-          <div className=" col-span-6 h-[500px] flex w-full items-center  ">
+        <div className="w-full lg:w-[73%] grid grid-cols-12 gap-8  h-full justify-center p-10">
+          <div className="col-span-12 h-[300px] md:col-span-6 md:h-[500px] flex w-full items-center  ">
             <img
               src={productDetails.image}
               alt={productDetails.title}
@@ -83,16 +90,16 @@ const SingleProduct = () => {
           </div>
 
           <div
-            className="flex col-span-6 flex-col gap-y-5 p-3 "
+            className="col-span-12 h-full  flex md:col-span-6 flex-col gap-y-5 p-3 "
             style={{
               fontFamily: "Trirong",
             }}
           >
-            <p className="font-semibold text-3xl tracking-[0.1em] items-baseline border-b-2 border-yellow ">
+            <p className="font-semibold text-xl md:text-3xl tracking-[0.1em] items-baseline border-b-2 border-yellow ">
               {productDetails.title}
             </p>
-            <div className="flex text-lg tracking-[0.1em] ">
-              <p className="pt-5 tracking-[0.1em]">
+            <div className="flex tracking-[0.1em] ">
+              <p className="pt-5 text-md md:text-lg  tracking-[0.1em]">
                 {productDetails.description}
               </p>
             </div>
@@ -123,27 +130,27 @@ const SingleProduct = () => {
             <div className="flex flex-col gap-y-3 tracking-[0.2em] w-full">
               <p className="font-bold ">QUANTITY</p>
               <div className="flex gap-x-3 items-center w-full">
-                {/* plus */}
-                <div
-                  className="border transition-all duration-100 ease-in active:scale-95 active:brightness-95 border-yellow h-8 w-8 flex items-center justify-center rounded-md cursor-pointer"
-                  onClick={handleInc}
-                >
-                  <BsPlus size={30} />
-                </div>
-                <p>{quantity}</p>
-
                 {/* minus */}
                 <div
                   onClick={handleDec}
                   className="border transition-all duration-100 ease-in active:scale-95 active:brightness-95 border-yellow h-8 w-8 flex items-center justify-center rounded-md cursor-pointer"
                 >
-                  <BiMinus size={30} />
+                  <BiMinus title="decrement" size={30} />
+                </div>
+                <p>{quantity}</p>
+
+                {/* plus */}
+                <div
+                  className="border transition-all duration-100 ease-in active:scale-95 active:brightness-95 border-yellow h-8 w-8 flex items-center justify-center rounded-md cursor-pointer"
+                  onClick={handleInc}
+                >
+                  <BsPlus title="increment" size={30} />
                 </div>
               </div>
             </div>
             <div className=" flex gap-x-5 w-full">
               <Button
-                name={"ADD TO BAG"}
+                name={"ADD TO CART"}
                 textColor="text-black"
                 radius="rounded-3xl"
                 bgColor="bg-white"

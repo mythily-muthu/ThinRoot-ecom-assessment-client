@@ -8,7 +8,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Swal from "sweetalert2";
 import { BsTrash } from "react-icons/bs";
 import { publicRequest } from "../axiosMethod";
-import { removeFromCart } from "../redux/cartSlice";
+import { clearCart, removeFromCart } from "../redux/cartSlice";
 
 const Cart = () => {
   let navigate = useNavigate();
@@ -24,8 +24,10 @@ const Cart = () => {
     }, 1300);
   }, []);
 
-  const handleCheckout = (products) => {
+  const handleCheckout = async (products) => {
     console.log(products);
+    await publicRequest.put(`/carts/clearcart/${userState._id}`);
+    dispatch(clearCart());
     let productsIds = products.map((id) => id);
     Swal.fire({
       // position: "top-end",
@@ -38,10 +40,24 @@ const Cart = () => {
 
   const handleDeleteCartItem = async (product) => {
     try {
-      await publicRequest.delete(`/carts/${userState._id}/${product._id}`);
-      dispatch(
-        removeFromCart({ itemId: product._id, quantity: product.quantity })
-      );
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          publicRequest.delete(`/carts/${userState._id}/${product._id}`);
+          // handle cart state
+          dispatch(
+            removeFromCart({ itemId: product._id, quantity: product.quantity })
+          );
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
+      });
     } catch (error) {
       console.log("error:", error.message);
     }
@@ -49,7 +65,7 @@ const Cart = () => {
 
   console.log("cart:", cartState);
   return (
-    <div className="flex flex-col w-full h-screen bg-grey">
+    <div className="flex flex-col w-full min-h-screen h-full bg-grey">
       <Topbar />
       <Navbar />
 
@@ -57,27 +73,27 @@ const Cart = () => {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <div className="flex w-full gap-x-8 mt-8">
+          <div className="flex w-full flex-col md:flex-row gap-8 mt-8">
             {/* left */}
             {cartState.cartItems.length > 0 ? (
-              <div className="flex flex-col w-2/3 gap-y-8">
+              <div className="flex flex-col w-full md:w-2/3  gap-y-8">
                 {cartState.cartItems.map((item) => {
                   return (
                     <div
                       key={item._id}
-                      className=" flex font-semibold text-xl border-2  min-h-40 h-max w-full rounded-3xl overflow-hidden"
+                      className=" flex font-semibold text-xl border-2 bg-white items-center  min-h-40 h-max w-full rounded-3xl overflow-hidden"
                       style={{
                         fontFamily: "Inter",
                       }}
                     >
                       <img
-                        className=" bg-white p-4 w-40 object-contain "
+                        className=" bg-white h-20 md:h-40 p-4 w-30 md:w-30 object-contain "
                         src={item.image}
                         alt="tomato"
                       />
                       <div className="flex justify-between p-6 bg-white w-full">
                         <div className="flex flex-col gap-y-2 w-full">
-                          <p>{item.title}</p>
+                          <p className="text-md md:text-xl">{item.title}</p>
                           <p className="text-primary">{item.rateperlb}</p>
                           <p className="font-bold border-2 rounded-xl h-10 w-max  flex items-center px-6 py-4 bg-white">
                             Qty: {item.quantity}
@@ -123,7 +139,7 @@ const Cart = () => {
             {/* right */}
             {cartState.cartItems.length > 0 && (
               <div
-                className="bg-white w-1/3 flex flex-col gap-y-8 p-6 h-max rounded-3xl border border-primary"
+                className="bg-white w-full md:w-1/3 flex flex-col gap-y-8 p-6 h-max rounded-3xl border border-primary"
                 style={{
                   fontFamily: "Inter",
                 }}
