@@ -136,7 +136,7 @@ const Register = () => {
                   </button>
                 </div>
                 <p
-                  className="flex w-full font-normal text-sm cursor-pointer"
+                  className="flex w-full font-normal text-sm cursor-pointer underline"
                   onClick={() => navigate("/login")}
                 >
                   Registered already? click here to LOGIN
