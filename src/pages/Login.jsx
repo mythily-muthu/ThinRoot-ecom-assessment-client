@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { publicRequest } from "../axiosMethod";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginSuccess } from "../redux/userSlice";
+import { ImSpinner10 } from "react-icons/im";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   let initialValues = {
     email: "",
@@ -26,15 +28,17 @@ const Login = () => {
 
   const handleSubmit = async (values) => {
     try {
+      setLoading(true);
       let res = await publicRequest.post("/auth/login", values);
       // setUserDetails(res.data.userDetails);
       if (res.status === 200) {
         dispatch(loginSuccess(res.data.userDetails));
         navigate("/");
       }
+      setLoading(false);
     } catch (error) {
       dispatch(loginFailure(error.message));
-
+      setLoading(false);
       console.log("Error in login", error.message);
     }
   };
@@ -47,7 +51,7 @@ const Login = () => {
       }}
     >
       <div
-        className="flex flex-col p-6  w-[400px] justify-center items-center bg-white  border border-primary
+        className="flex flex-col p-4 md:p-6 w-[350px]  md:w-[400px] justify-center items-center bg-white  border border-primary
         bg-opacity-25"
       >
         <p className="font-bold text-primary tracking-[0.2em]">MAKE YOU UP</p>
@@ -101,12 +105,23 @@ const Login = () => {
                   >
                     Dont have an account?
                   </p>
-                  <div className="flex justify-center py-5">
+
+                  <div className="flex  items-center w-full flex-col gap-y-2 py-5">
+                    {loading && (
+                      <p className="text-red-500 text-xs md:text-sm">
+                        Server might be slow, wait a bit..
+                      </p>
+                    )}
                     <button
-                      className="flex justify-center items-center bg-primary text-white px-4 py-1 tracking-[0.2em] rounded-md"
+                      disabled={loading}
+                      className="flex justify-center items-center bg-primary text-white px-4 py-1 w-24 tracking-[0.2em] rounded-md"
                       type="submit"
                     >
-                      LOGIN
+                      {loading ? (
+                        <ImSpinner10 className="animate-spin" />
+                      ) : (
+                        "LOGIN"
+                      )}
                     </button>
                   </div>
                 </div>
